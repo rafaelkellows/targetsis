@@ -55,6 +55,7 @@
                     })
                     .done(function( data ) {
                         //console.log( "JSON Data: " + data.length );
+                        diasUteis = 22
                         arrDay = [];
                         arrValues = [];
                         arrMedia = 0;
@@ -67,7 +68,7 @@
 
                         console.log( "\nO menor valor de faturamento ocorrido em um dia do mês foi de R$ " + Math.min( ...arrValues).toFixed(2) );
                         console.log( "O maior valor de faturamento ocorrido em um dia do mês foi de R$ " + Math.max( ...arrValues).toFixed(2) );
-                        console.log( "Média mensal de faturamento diário foi de R$ " + (arrMedia / arrValues.length).toFixed(2) );
+                        console.log( "Média mensal de faturamento diário foi de R$ " + (arrMedia / arrValues.length ).toFixed(2) );
                         
                         console.log( "Dias do mês em que o valor de faturamento diário foi superior à média mensal: ");
                         $.each(arrValues, function (key, item) {
