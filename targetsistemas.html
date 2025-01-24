@@ -7,22 +7,20 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script>
             $( document ).ready(function() {
-                console.log( "ready!" );
+                console.log( "Rady!\n" );
 
                 // 1) Observe o trecho de código abaixo: int INDICE = 13, SOMA = 0, K = 0; Enquanto K < INDICE faça { K = K + 1; SOMA = SOMA + K; } Imprimir(SOMA); Ao final do processamento, qual será o valor da variável SOMA?
                 // Resposta
                 indice = 13
                 soma = 0
                 k = 0
-
                 if ( k < indice ){
                     k = k + 1
                     soma = soma + k
                 }
-                
-                $('.answ_1 span').text(soma)
+                console.log( '\nO valor da variável SOMA é ' + soma );
 
-                // 2) Dado a sequência de Fibonacci, onde se inicia por 0 e 1 e o próximo valor sempre será a soma dos 2 valores anteriores (exemplo: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...), escreva um programa na linguagem que desejar onde, informado um número, ele calcule a sequência de Fibonacci e retorne uma mensagem avisando se o número informado pertence ou não a sequência.*/
+                // 2) Dado a sequência de Fibonacci, onde se inicia por 0 e 1 e o próximo valor sempre será a soma dos 2 valores anteriores (exemplo: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...), escreva um programa na linguagem que desejar onde, informado um número, ele calcule a sequência de Fibonacci e retorne uma mensagem avisando se o número informado pertence ou não a sequência.
                 // Resposta
                 isFibonacciNumber = false
                 verifyNumber = 144
@@ -34,11 +32,63 @@
                     values.push(fibb_l + fibb_f);
                     if ( (fibb_l + fibb_f) == verifyNumber) {
                         isFibonacciNumber = true
-                        console.log((fibb_l + fibb_f) + ' is a Fibonacci number');
+                        console.log('\n'+(fibb_l + fibb_f) + ' is a Fibonacci number');
                     }
                     
                 }
                 console.log('Fibonacci valid numbers: ' + values);
+
+                /* 3) Dado um vetor que guarda o valor de faturamento diário de uma distribuidora, faça um programa, na linguagem que desejar, que calcule e retorne:
+                    • O menor valor de faturamento ocorrido em um dia do mês;
+                    • O maior valor de faturamento ocorrido em um dia do mês;
+                    • Número de dias no mês em que o valor de faturamento diário foi superior à média mensal.
+
+                    IMPORTANTE:
+                    a) Usar o json ou xml disponível como fonte dos dados do faturamento mensal;
+                    b) Podem existir dias sem faturamento, como nos finais de semana e feriados. Estes dias devem ser ignorados no cálculo da média; */
+                // Resposta
+
+                $.ajax({
+                    url: "dados.json",
+                    type: "GET",
+                    dataType : "json",
+                    })
+                    .done(function( data ) {
+                        //console.log( "JSON Data: " + data.length );
+                        arrDay = [];
+                        arrValues = [];
+                        arrMedia = 0;
+                        $.each(data, function (key, item) {
+                            //console.log(item.dia);
+                            arrDay.push(item.dia);
+                            arrValues.push(item.valor);
+                            arrMedia = arrMedia + item.valor;
+                        });
+
+                        console.log( "\nO menor valor de faturamento ocorrido em um dia do mês foi de R$ " + Math.min( ...arrValues).toFixed(2) );
+                        console.log( "O maior valor de faturamento ocorrido em um dia do mês foi de R$ " + Math.max( ...arrValues).toFixed(2) );
+                        console.log( "Média mensal de faturamento diário foi de R$ " + (arrMedia / arrValues.length).toFixed(2) );
+                        
+                        console.log( "Dias do mês em que o valor de faturamento diário foi superior à média mensal: ");
+                        $.each(arrValues, function (key, item) {
+                            if(item >= (arrMedia / arrValues.length) ){
+                                console.log('Dia ' + arrDay[key] + ' - Faturamento de R$ ' + item.toFixed(2) )
+                            }
+                        })
+                    })
+                    // Code to run if the request fails; the raw request and
+                    // status codes are passed to the function
+                    .fail(function( xhr, status, errorThrown ) {
+                        alert( "Sorry, there was a problem!" );
+                        console.log( "Error: " + errorThrown );
+                        console.log( "Status: " + status );
+                        console.dir( xhr );
+                    })
+                    // Code to run regardless of success or failure;
+                    .always(function( xhr, status ) {
+                        console.log( "\nThe request is complete!" );
+                    });
+
             });
         </script>
     </head>
