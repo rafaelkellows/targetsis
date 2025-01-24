@@ -68,8 +68,7 @@
 
                         console.log( "\nO menor valor de faturamento ocorrido em um dia do mês foi de R$ " + Math.min( ...arrValues).toFixed(2) );
                         console.log( "O maior valor de faturamento ocorrido em um dia do mês foi de R$ " + Math.max( ...arrValues).toFixed(2) );
-                        console.log( "Média mensal de faturamento diário foi de R$ " + (arrMedia / arrValues.length ).toFixed(2) );
-                        
+                        console.log( "Média mensal de faturamento diário foi de R$ " + (arrMedia / diasUteis).toFixed(2) );
                         console.log( "Dias do mês em que o valor de faturamento diário foi superior à média mensal: ");
                         $.each(arrValues, function (key, item) {
                             if(item >= (arrMedia / arrValues.length) ){
@@ -87,9 +86,33 @@
                     })
                     // Code to run regardless of success or failure;
                     .always(function( xhr, status ) {
-                        console.log( "\nThe request is complete!" );
+                        console.log( "\nRequest is complete!" );
                     });
 
+                /*
+                4) Dado o valor de faturamento mensal de uma distribuidora, detalhado por estado:
+                • SP – R$67.836,43
+                • RJ – R$36.678,66
+                • MG – R$29.229,88
+                • ES – R$27.165,48
+                • Outros – R$19.849,53
+                Escreva um programa na linguagem que desejar onde calcule o percentual de representação que cada estado teve dentro do valor total mensal da distribuidora.  
+                */
+               arrData = [
+                ['SP', '67.836,43'], ['RJ', '36.678,66'], ['MG', '29.229,88'], ['ES', 'R$27.165,48'], ['Outros', '19.849,53']
+               ]
+               monthTotalValue = 0;
+               $.each(arrData, function (key, item) {
+                    //console.log('Dia ' + arrData[key][1] );
+                    monthTotalValue += Number(arrData[key][1].replace(',','').replace('R$',''))
+                })
+                console.log( 'O valor total mensal da distribuidora foi de R$' + monthTotalValue.toFixed(3) + ',' + String(monthTotalValue).slice(7, 9) )
+
+                $.each(arrData, function (key, item) {
+                    console.log( 
+                        arrData[key][0] + ' o percentual foi de ' +(monthTotalValue / Number(arrData[key][1].replace(',','').replace('R$',''))).toFixed(2) + '%'
+                    );
+                })
             });
         </script>
     </head>
