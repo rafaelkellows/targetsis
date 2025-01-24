@@ -8,12 +8,27 @@
         <script>
             $( document ).ready(function() {
                 console.log( "ready!" );
+                
+                // Resposta da Pergunta
+                // # 1
+                indice = 13
+                soma = 0
+                k = 0
+
+                if ( k < indice ){
+                    k = k + 1
+                    soma = soma + k
+                }
+                console.log(soma);
+                $('.answ_1 span').text(soma)
+
             });
         </script>
     </head>
     <body>
         <main>
             <p>Target Sistemas</p>
+            <div class="answ_1">Resposta 1: <span></span></div>
         </main>
     </body>
 </html>
